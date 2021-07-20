@@ -1,0 +1,7 @@
+Public class ApexClass {
+
+	public void sayHello() {
+		System.debug('Hello');
+
+	}
+}
