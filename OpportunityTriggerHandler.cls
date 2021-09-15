@@ -1,7 +1,7 @@
 public class OpportunityTriggerHandler {
-    public static void handleClosedWonOpportunity(List<Opportunity> newList) {
+    public static void handleClosedWonOpportunity(List<Opportunity> newList, Map<Id, Opportunity> oldMap) {
         for (Opportunity opp : newList) {
-            if (opp.StageName == 'Closed Won') {
+            if (oldMap.get(opp.Id).StageName == 'Closed Won') {
                 opp.addError('Can not update a Closed Opportunity...');
             }
         }
