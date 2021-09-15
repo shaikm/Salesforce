@@ -1,0 +1,40 @@
+trigger ContactTrigger on Contact (before insert) {
+
+    Map<Id, Contact> accountIds = new Map<Id, Contact>();
+    if(Trigger.isBefore && Trigger.isInsert) {
+        for(Contact c: Trigger.new) {
+            if (c.AccountId != null) {
+                accountIds.put(c.AccountId, c);
+            }
+        }
+        
+        Map<Id, List<Contact>> contactMap = new Map<Id, List<Contact>>();
+        
+        //creating map of accounts with list of contacts by passing accountIds collected from Trigger.new to the query
+        for (Contact c: [SELECT Id, Name, AccountId FROM contact WHERE AccountId IN :accountIds.keySet()]) {
+            if (contactMap.containsKey(c.AccountId)) {
+                contactMap.get(c.AccountId).add(c);
+            } else {
+                contactMap.put(c.AccountId, new List<Contact>{c});
+            }
+        }
+		     
+        //can be optimized by creating filtered contacts from Trigger.new for loop above
+        for(Contact c: Trigger.new) {
+            if (c.AccountId != null && contactMap.containsKey(c.AccountId)) {
+                if (contactMap.get(c.AccountId).size() >= 5) {
+                    c.addError('Account should not have more than five contacts!');
+                }
+            }
+        }
+        
+        
+        
+        //for (AggregateResult aRes: [SELECT count(Id) contactCount, AccountId FROM Contact WHERE AccountId IN :accountIds GROUP BY AccountId]) {
+           // Integer count = (Integer) aRes.get('contactCount');
+            //if (count != null && count > 5) {
+             //   System.debug('Not able to create a contact');
+            //}
+        //}
+    }
+}

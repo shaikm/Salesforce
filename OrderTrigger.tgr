@@ -1,0 +1,9 @@
+trigger OrderTrigger on Order (before insert, before delete) {
+    if (Trigger.isBefore && Trigger.isInsert) {
+        OrderTriggerHandler.appendOrder(Trigger.new);
+    }
+    
+    if (Trigger.isBefore && Trigger.isDelete) {
+        OrderTriggerHandler.checkClosedOrders(Trigger.old);
+    }
+}
