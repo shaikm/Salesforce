@@ -37,7 +37,6 @@ public class AssignmentClass1 {
     }
     
     public static void getSmallAndLargeValueWithOutSort(List<Integer> arr) {
-        
         if (arr!=null && !arr.isEmpty()) {
             Integer small = arr[0], large = arr[0];
             
@@ -84,7 +83,7 @@ public class AssignmentClass1 {
     }
     
     public static void countWords(String input) {
-        if (input == null || String.isBlank(input)){
+        if (input != null && String.isNotEmpty(input)){
             
             Map<String, Integer> wordMap = new Map<String, Integer>();
             String[] wordArray = input.split(',');
@@ -135,7 +134,6 @@ public class AssignmentClass1 {
         
         System.debug('Map1::' + input1Map + 'Map2::' + input2Map);
         for (String key: input1Map.keySet()) {
-            System.debug('Key:: ' + key + ' Value:: ' + input1Map.get(key) + '--' + input2Map.get(key));
             if (input1Map.get(key) != input2Map.get(key)){
                 return false;
             }
