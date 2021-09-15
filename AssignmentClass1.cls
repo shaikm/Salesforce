@@ -15,12 +15,25 @@ public class AssignmentClass1 {
     }
     
     // S1 is the string to test value, S2 is the input value 
-    public static Boolean checkString(String s1, String s2) {  
+    public static Boolean checkStartsWith(String s1, String s2) {  
         if (s2.startsWith(s1)){
             return true;
-        } else if (s2.endsWith(s1)){
+        }
+        
+        return false;    
+    }
+    
+    
+    public static Boolean checkEndsWith(String s1, String s2) {  
+        if (s2.endsWith(s1)){
             return true;
-        } else if (s2.contains(s1)) {
+        }
+        
+        return false;    
+    }
+    
+    public static Boolean checkContains(String s1, String s2) {  
+        if (s2.contains(s1)) {
             return true;
         } 
         
@@ -84,7 +97,6 @@ public class AssignmentClass1 {
     
     public static void countWords(String input) {
         if (input != null && String.isNotEmpty(input)){
-            
             Map<String, Integer> wordMap = new Map<String, Integer>();
             String[] wordArray = input.split(',');
             for (String s: wordArray) {
