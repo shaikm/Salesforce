@@ -1,0 +1,23 @@
+trigger BillDetailsTrigger on Bill_Detail__c (after insert, after update, after delete, after undelete) {
+    Set<Id> billIds = new Set<Id>();
+    
+    if(Trigger.isInsert || Trigger.isUpdate || Trigger.isUndelete){
+        for(Bill_Detail__c item : Trigger.new){
+            if(item.Bill__c != null){
+                billIds.add(item.Bill__c); 
+            }
+        }
+    }
+    
+    if(Trigger.isDelete){
+        for(Bill_Detail__c item : Trigger.old){
+            if(item.Bill__c != null){
+                billIds.add(item.Bill__c);
+            }
+        }
+    }
+    
+    if (!billIds.isEmpty()) {
+        BillDetailTriggerHandler.rollupFields(billIds);
+    }
+}
